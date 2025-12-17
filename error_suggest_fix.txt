@@ -1,0 +1,358 @@
+still it gives me this error.... do you think you can solve it
+Insert Reservation Error: Error: Connection lost: The server closed the connection.
+    at PromiseConnection.execute (/home/calyx/Desktop/SmartLink Malawi/node_modules/mysql2/lib/promise/connection.js:47:22)
+    at /home/calyx/Desktop/SmartLink Malawi/server.js:239:49
+    at Layer.handleRequest (/home/calyx/Desktop/SmartLink Malawi/node_modules/router/lib/layer.js:152:17)
+    at next (/home/calyx/Desktop/SmartLink Malawi/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/calyx/Desktop/SmartLink Malawi/node_modules/router/lib/route.js:117:3)
+    at handle (/home/calyx/Desktop/SmartLink Malawi/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/calyx/Desktop/SmartLink Malawi/node_modules/router/lib/layer.js:152:17)
+    at /home/calyx/Desktop/SmartLink Malawi/node_modules/router/index.js:295:15
+    at processParams (/home/calyx/Desktop/SmartLink Malawi/node_modules/router/index.js:582:12)
+    at next (/home/calyx/Desktop/SmartLink Malawi/node_modules/router/index.js:291:5) {
+  code: 'PROTOCOL_CONNECTION_LOST',
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+
+db.js
+// db.js
+const mysql = require('mysql2');
+
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',            // your MySQL username
+  password: '',            // your MySQL password
+  database: 'fuel_db' // the database you want to use
+});
+
+connection.connect(err => {
+  if (err) throw err;
+  console.log('Connected to MySQL via Node.js!');
+});
+
+module.exports = connection;
+
+server.js:
+const express = require('express');
+const app = express();
+const path = require('path');
+const fs = require('fs');
+const session = require('express-session'); // added
+const connection = require('./db');
+const bcrypt = require('bcrypt'); // required for signup/login password hashing
+const crypto = require('crypto');
+function generateToken(length = 8) {
+  return crypto.randomBytes(length).toString('hex'); // returns a hex string, e.g., "9f2c4a7b8e1d2f3a"
+}
+
+
+app.use(express.static(path.join(__dirname, 'fuel')));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// SESSION CONFIGURATION
+app.use(session({
+  secret: 'romeo2010favourrhian',      // replace with strong secret in production
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 3600000 }   // 1 hour
+}));
+
+// Middleware to check if user is logged in
+function isLoggedIn(req, res, next) {
+  if (req.session && req.session.userId) {
+    next();
+  } else {
+    res.status(401).send('Unauthorized: Please log in first');
+  }
+}
+
+// Load AI knowledge from JSON file
+const knowledgePath = path.join(__dirname, 'knowledge.json');
+let knowledge = [];
+try {
+  const data = fs.readFileSync(knowledgePath, 'utf-8');
+  knowledge = JSON.parse(data);
+  console.log(`Loaded ${knowledge.length} knowledge entries`);
+} catch (err) {
+  console.error('Failed to load knowledge.json', err);
+}
+
+// Existing fuel endpoints
+app.get('/fuel', (req, res) => {
+  connection.query('SELECT * FROM fuel_pumps', (err, results) => {
+    if (err) return res.status(500).json({ error: 'Failed to fetch fuel pumps' });
+    res.json(results);
+  });
+});
+
+
+app.get('/emergency-fuel', (req, res) => {
+  const { lat, lng } = req.query;
+  const sql = `
+    SELECT *,
+    (
+      6371 * acos(
+        cos(radians(?)) * cos(radians(latitude)) *
+        cos(radians(longitude) - radians(?)) +
+        sin(radians(?)) * sin(radians(latitude))
+      )
+    ) AS distance
+    FROM fuel_pumps
+    WHERE status = 'Available'
+    ORDER BY distance ASC, FIELD(queue_level,'short','medium','long')
+    LIMIT 3
+  `;
+  connection.query(sql, [lat, lng, lat], (err, results) => {
+    if (err) return res.status(500).json({ error: 'Emergency lookup failed' });
+    res.json(results);
+  });
+});
+
+app.get('/other-businesses', (req, res) => {
+  const sql = `
+    SELECT id, name, category, city, latitude, longitude, rating, opening_hours AS opening,
+           image, status
+    FROM other_businesses
+    WHERE status = 'Open'
+    ORDER BY rating DESC
+    LIMIT 20
+  `;
+  connection.query(sql, (err, results) => {
+    if (err) return res.status(500).json({ error: 'Failed to load businesses' });
+    res.json(results);
+  });
+});
+
+// AI endpoint
+app.post('/about-ai', (req, res) => {
+  const q = (req.body.question || '').toLowerCase();
+  let reply = "I specialize only in SmartLink Malawi information. Kindly rephrase your question about the platform.";
+
+  for (let item of knowledge) {
+    for (let keyword of item.keywords) {
+      if (q.includes(keyword.toLowerCase())) {
+        const randomIndex = Math.floor(Math.random() * item.answers.length);
+        reply = item.answers[randomIndex];
+        break;
+      }
+    }
+    if (reply !== "I specialize only in SmartLink Malawi information. Kindly rephrase your question about the platform.") break;
+  }
+
+  res.json({ reply });
+});
+
+// SIGNUP ROUTE
+app.post('/signup', async (req, res) => {
+  const { name, email, password } = req.body;
+  if (!name || !email || !password) return res.status(400).json({ error: 'All fields required' });
+
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    connection.query(
+      'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
+      [name, email, hashedPassword],
+      (err, result) => {
+        if (err) {
+          if (err.code === 'ER_DUP_ENTRY') return res.status(400).json({ error: 'Email already in use' });
+          return res.status(500).json({ error: 'Server error' });
+        }
+        req.session.userId = result.insertId;
+        res.json({ success: true, message: 'Account created', userId: result.insertId });
+      }
+    );
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// LOGIN ROUTE
+app.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) return res.status(400).json({ error: 'Email and password required' });
+
+  try {
+    connection.query(
+      'SELECT * FROM users WHERE email = ?',
+      [email],
+      async (err, rows) => {
+        if (err) return res.status(500).json({ error: 'Server error' });
+        if (!rows.length) return res.status(400).json({ error: 'Invalid email or password' });
+
+        const user = rows[0];
+        const match = await bcrypt.compare(password, user.password);
+        if (!match) return res.status(400).json({ error: 'Invalid email or password' });
+
+        req.session.userId = user.id;
+        res.json({ success: true, message: 'Logged in', userId: user.id });
+      }
+    );
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// LOGOUT ROUTE
+app.post('/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) return res.status(500).json({ error: 'Failed to logout' });
+    res.json({ success: true, message: 'Logged out' });
+  });
+});
+
+// PROTECTED DASHBOARD
+app.get('/dashboard', isLoggedIn, (req, res) => {
+  connection.query(
+    'SELECT id, name, email FROM users WHERE id = ?',
+    [req.session.userId],
+    (err, rows) => {
+      if (err) return res.status(500).json({ error: 'Server error' });
+      res.json({ user: rows[0] });
+    }
+  );
+});
+
+// Middleware to protect the main SPA
+app.use((req, res, next) => {
+  // Allow login, signup, and API routes without session
+  const openPaths = ['/login', '/signup', '/about-ai', '/fuel', '/emergency-fuel', '/other-businesses'];
+  if (openPaths.some(p => req.path.startsWith(p))) {
+    return next();
+  }
+
+  // Check session
+  if (!req.session.userId) {
+    return res.sendFile(path.join(__dirname, 'fuel', 'login.html'));
+  }
+
+  next();
+});
+
+// Serve static files after the session check
+app.use(express.static(path.join(__dirname, 'fuel')));
+
+
+
+// Simple route to check current session
+app.get('/me', (req, res) => {
+  if (req.session.userId) {
+    res.json({ loggedIn: true, userId: req.session.userId });
+  } else {
+    res.json({ loggedIn: false });
+  }
+});
+
+app.post('/reservations', async (req, res) => {
+  const {
+    business_id,
+    type,              // 'fuel' or 'other'
+    fuel_type,
+    fuel_amount,
+    fuel_time,
+    service_name,
+    service_time
+  } = req.body;
+
+  if (!req.session.userId) return res.status(401).json({ error: 'Not authenticated' });
+  if (!business_id || !type) return res.status(400).json({ error: 'Business ID and type are required' });
+
+  // Validate fields based on type
+  if (type === 'fuel' && (!fuel_type || !fuel_amount || !fuel_time)) {
+    return res.status(400).json({ error: 'Fuel type, amount, and time are required for fuel reservations' });
+  }
+
+  if (type === 'other' && (!service_name || !service_time)) {
+    return res.status(400).json({ error: 'Service name and time are required for other reservations' });
+  }
+
+  try {
+    // Generate token
+    const token = Math.random().toString(36).substring(2, 10).toUpperCase();
+
+    // Insert into reservations table
+    const [result] = await connection.promise().execute(
+      `INSERT INTO reservations
+        (user_id, business_id, type, fuel_type, fuel_amount,service_name, service_time, token)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        req.session.userId,
+        business_id,
+        type,
+        type === 'fuel' ? fuel_type : null,
+        type === 'fuel' ? fuel_amount : null,
+        type === 'fuel' ? fuel_time : null,
+        type === 'other' ? service_name : null,
+        type === 'other' ? service_time : null,
+        token
+      ]
+    );
+
+    res.json({ success: true, reservationId: result.insertId, token });
+  } catch (err) {
+    console.error('Insert Reservation Error:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+
+app.get('/my-reservations', async (req, res) => {
+  if (!req.session.userId) return res.status(401).json({ error: 'Not authenticated' });
+
+  try {
+   const sql = `SELECT 
+    r.*,
+    CASE 
+        WHEN r.type = 'other' THEN ob.name
+        WHEN r.type = 'fuel' THEN fp.name
+        ELSE NULL
+    END AS business_name
+FROM reservations r
+LEFT JOIN other_businesses ob 
+    ON r.business_id = ob.id AND r.type COLLATE utf8mb4_unicode_ci = 'other'
+LEFT JOIN fuel_pumps fp
+    ON r.business_id = fp.id AND r.type COLLATE utf8mb4_unicode_ci = 'fuel'
+WHERE r.user_id = ?
+ORDER BY COALESCE(r.fuel_time, r.service_time, r.created_at) DESC;
+
+`;
+
+    const [rows] = await connection.promise().execute(sql, [req.session.userId]);
+    res.json({ reservations: rows });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+app.get('/notifications', async (req, res) => {
+  if (!req.session.userId) return res.status(401).json({ error: 'Not authenticated' });
+
+  try {
+    const sql = `SELECT * FROM notifications WHERE user_id = ? ORDER BY created_at DESC`;
+    const [rows] = await connection.promise().execute(sql, [req.session.userId]);
+    res.json({ notifications: rows });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Fallback route for SPA
+app.use((req, res) => {
+  res.sendFile(path.join(__dirname, 'fuel', 'index.html'));
+});
+
+setInterval(() => {
+  connection.query('SELECT 1');
+}, 60000); // ping every 60s
+
+// START SERVER
+app.listen(3011, '0.0.0.0', () => {
+  console.log('Server running on port 3011');
+});
+
+do not change anything 

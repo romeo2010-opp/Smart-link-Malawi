@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Login — SmartLink Malawi</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  body {background: var(--bg);}
+  .auth-container{
+    max-width:360px;
+    margin:80px auto;
+    padding:32px;
+    background: linear-gradient(180deg, rgba(3,3,3,.95), rgba(8,8,8,.95));
+    border-radius:24px;
+    box-shadow:0 10px 40px rgba(3,10,10,0.6);
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    color:#fff;
+  }
+  .auth-container h2{margin:0;font-size:22px;text-align:center;font-weight:700;}
+  .auth-group{display:flex;flex-direction:column;gap:6px;}
+  .auth-group label{font-size:12px;color:var(--muted);}
+  .auth-group input{padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:rgba(10,10,10,.6);color:#fff;outline:none;}
+  .auth-group input:focus{border-color:var(--accent);}
+  .auth-submit{
+    padding:14px;border-radius:14px;border:none;font-weight:700;cursor:pointer;background:linear-gradient(180deg,#00c853,#009e40);color:#000;transition:opacity .25s ease;
+  }
+  .auth-submit:hover{opacity:.95;}
+  .auth-footer{text-align:center;font-size:12px;color:var(--muted);}
+  .auth-footer a{color:var(--accent); text-decoration:none;}
+</style>
+</head>
+<body>
+  <div class="auth-container fade-in">
+    <h2>Login</h2>
+    <div class="auth-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="you@example.com">
+    </div>
+    <div class="auth-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="••••••••">
+    </div>
+    <button class="auth-submit" id="loginBtn" onclick="login()">Login</button>
+    <div class="auth-footer">Don't have an account? <a href="signup.html">Sign Up</a></div>
+  </div>
+
+<script >
+  // Login
+async function login() {
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+
+  try {
+    const res = await fetch('/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+      credentials: 'same-origin'
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      // Server returned an error status
+      alert(data.error || 'Login failed');
+      return;
+    }
+
+    // Successful login
+    alert(data.message); // "Logged in"
+    if (data.success) window.location.href = '/';
+
+  } catch (err) {
+    console.error('Login error:', err);
+    alert('Network error. Try again.');
+  }
+}
+
+</script>
+</body>
+</html>

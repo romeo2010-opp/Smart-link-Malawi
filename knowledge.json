@@ -1,0 +1,383 @@
+[
+  {
+    "keywords": ["founder","who built","owner","developer","creator","who made","who created","ceo","about","background","who is the founder","who is behind smartlink","tell me about romeo","who is romeo","who is the creator"],
+    "answers": [
+      "What makes SmartLink Malawi remarkable is its founder, Romeo Favour Mbeya. At just 16 years old and living in Blantyre, he is already building impactful digital solutions for everyday challenges. His vision is bold, his ambition is exceptional, and this platform is just the beginning of what promises to be a much bigger journey. 🚀💡",
+      "SmartLink Malawi was created by Romeo Favour Mbeya, a highly driven 16-year-old innovator from Blantyre. Even at his young age, he is turning ideas into practical digital systems. His passion for technology and improving lives is inspiring. 🌟😎",
+      "Behind SmartLink Malawi stands Romeo Favour Mbeya, a young but remarkably ambitious 16-year-old from Blantyre. His dedication to leveraging technology for improving everyday services is impressive. This is just the foundation—more innovation is coming! 🔥💻"
+    ]
+  },
+  {
+    "keywords": ["what is smartlink","about smartlink","what does smartlink do","what is this platform","what is this website","how does smartlink work","what can i do on smartlink","tell me about smartlink","services offered","what is smartlink malawi"],
+    "answers": [
+      "SmartLink Malawi is a digital service discovery and queue management platform connecting users to fuel stations, pharmacies, and essential services. 📱⛽💊",
+      "It provides real-time access to nearby essential services, helping users save time and effort. ⏱️🌍",
+      "The platform modernizes service access with live data and reservation capabilities for fuel stations, pharmacies, and other service providers. ⚡💡"
+    ]
+  },
+  {
+    "keywords": ["emergency fuel","emergency","nearest fuel","closest fuel","urgent fuel","fuel nearby","where can i find fuel nearby","show me the nearest fuel station","i need fuel urgently","emergency fuel options","fuel stations with short queues","which fuel pumps are available","how can i get fuel quickly"],
+    "answers": [
+      "The Emergency Fuel Finder quickly identifies the nearest fuel stations with the shortest wait times. ⛽🚨",
+      "This feature leverages live GPS to guide you to the closest available fuel stations during urgent situations. 📍🏃‍♂️",
+      "Emergency Fuel Finder prioritizes nearby stations with low queues, ensuring fast service when you need it most. ⚡🕒"
+    ]
+  },
+  {
+    "keywords": ["reservation","queue","booking","book","appointment","how can i book a service slot","can i reserve my place in line","how do i make an appointment","can i skip the queue","how to book a fuel slot online","how to reserve a pharmacy visit"],
+    "answers": [
+      "SmartLink allows users to reserve service slots digitally, helping them avoid long queues. 📅✅",
+      "You can book service times in advance with SmartLink, minimizing waiting and optimizing your schedule. ⏱️🖥️",
+      "The platform provides digital reservations and queue management for faster and smoother service. 💡🛎️"
+    ]
+  },
+  {
+    "keywords": ["pharmacy","internet cafe","other businesses","services","what other businesses are on smartlink","can i find pharmacies here","are internet cafes listed","how many services are available","show me businesses nearby","which local shops use smartlink"],
+    "answers": [
+      "SmartLink supports a variety of services including pharmacies, internet cafés, and other service-based businesses. 🏪💊🖥️",
+      "The platform extends beyond fuel stations to include medical, digital, and other local service providers. 🌍✨",
+      "Various local service businesses are integrated into the SmartLink ecosystem to reach more users efficiently. 📱🚀"
+    ]
+  },
+  {
+    "keywords": ["hi", "hello", "hey", "hiya"],
+    "answers": [
+      "Hello! How’s your day going? 😄",
+      "Hey there! Ready to explore SmartLink Malawi? 👋",
+      "Hi! What can I help you with today? 🤗",
+      "Hey! Good to see you here! 😎",
+      "Hello! How’s everything with you? 🌟"
+    ]
+  },
+  {
+    "keywords": ["how are you", "how's it going", "how do you do"],
+    "answers": [
+      "I’m doing great, thanks for asking! How about you? 😁",
+      "All systems are running smoothly! How are you today? ⚡",
+      "Feeling chatty and helpful! How’s your day so far? 🌈",
+      "I’m good! What about you? 😎",
+      "Everything’s perfect here. How about on your side? 💻"
+    ]
+  },
+  {
+    "keywords": ["thanks", "thank you", "thx", "ty"],
+    "answers": [
+      "You’re welcome! 😊",
+      "Anytime! Glad I could help. 👍",
+      "No problem at all! 🤗",
+      "Happy to help! 🌟",
+      "My pleasure! 😎"
+    ]
+  },
+  {
+    "keywords": ["bye", "goodbye", "see you", "later", "cya"],
+    "answers": [
+      "Goodbye! Talk to you soon. 👋",
+      "See you later! Stay safe. ✨",
+      "Bye! Don’t hesitate to ask if you need anything else. 😊",
+      "Catch you later! 😎",
+      "Have a great day! 🌟"
+    ]
+  },
+  {
+    "keywords": ["joke", "funny", "make me laugh", "laugh"],
+    "answers": [
+      "Why did the computer go to the doctor? Because it caught a virus! 😂",
+      "I would tell you a joke about UDP… but you might not get it. 😜",
+      "Why did the smartphone go to school? It wanted to be smarter! 🤓",
+      "Why don’t programmers like nature? It has too many bugs. 🐛",
+      "I know a joke about Wi-Fi, but it might not connect. 📶🤣"
+    ]
+  },
+  {
+    "keywords": ["good morning", "morning", "gm"],
+    "answers": [
+      "Good morning! Ready for a productive day? ☀️",
+      "Morning! How’s it going? 🌅",
+      "Wishing you a great start to your day! 😁",
+      "Good morning! Anything exciting planned today? 🌟",
+      "Rise and shine! Let’s make today amazing! 💪"
+    ]
+  },
+  {
+    "keywords": ["good night", "night", "gn", "sleep well"],
+    "answers": [
+      "Good night! Sweet dreams. 🌙",
+      "Sleep well and recharge for tomorrow! 😴",
+      "Night! Hope you have a peaceful sleep. 🛌",
+      "Rest well! Tomorrow is another great day. 🌟",
+      "Good night! Don’t let the bugs bite. 🐞"
+    ]
+  },
+  {
+    "keywords": ["lol", "haha", "lmao", "funny", "rofl"],
+    "answers": [
+      "Haha 😆 glad you liked that!",
+      "LOL! 🤣 That cracked me up too!",
+      "Hehe 😄 always good to laugh a bit!",
+      "Lmao 😂 you got jokes!",
+      "Haha, humor is the best! 😎"
+    ]
+  },
+  {
+    "keywords": ["love you", "like you", "appreciate you", "ily"],
+    "answers": [
+      "Aww 😍 right back atcha!",
+      "Feeling the love! 💖 Thanks!",
+      "Ily too! 💌",
+      "Big virtual hugs! 🤗",
+      "You’re awesome! Much appreciated! 🌟"
+    ]
+  },
+  {
+    "keywords": ["bored", "nothing to do", "help me", "fun"],
+    "answers": [
+      "Want me to tell you a joke or fun fact? 😏",
+      "How about exploring SmartLink features while we chat? 📱",
+      "Let’s play a virtual guessing game! Ready? 🎲",
+      "I can keep you company while you learn about SmartLink. 🤗",
+      "Feeling bored? Let’s discover something new together! 🌟"
+    ]
+  },
+  {
+    "keywords": ["sad", "unhappy", "down", "upset", "depressed", "meh", "sigh"],
+    "answers": [
+      "Aww 😔 hope I can cheer you up a bit!",
+      "Hang in there! 💪 Better days ahead!",
+      "Sending good vibes your way 🌈",
+      "It’s okay, we all have meh days 😌",
+      "Don’t worry, we can chat and chill a bit 🫂"
+    ]
+  },
+  {
+    "keywords": ["happy", "excited", "good", "great day", "yay", "awesome", "hype"],
+    "answers": [
+      "Yay! 🥳 Love the energy!",
+      "Hype mode ON! ⚡ Let’s roll!",
+      "So awesome! 😁 Keep that smile going!",
+      "Excited vibes all around! 🎉",
+      "Woohoo! Feeling the joy! 🌟"
+    ]
+  },
+  {
+    "keywords": ["sleepy", "nap", "zzz", "tired"],
+    "answers": [
+      "Time to recharge! 😴",
+      "Catch those Zzz’s! 💤",
+      "Rest up, my friend 😌",
+      "Even AI respects nap time! (well… kinda) 🤖💤",
+      "Sleepy mode: activated 🛌"
+    ]
+  },
+  {
+    "keywords": ["hungry", "food", "snack", "meal", "nom", "eat"],
+    "answers": [
+      "Nom nom! 🍕 What’s for lunch?",
+      "Feeling hungry? 😋 Let’s imagine a feast!",
+      "Snack time! 🥪 Yum!",
+      "Food vibes only 🍔🍟",
+      "I wish I could share virtual fries 🍟"
+    ]
+  },
+  {
+    "keywords": ["party", "dance", "music", "dj", "vibe", "sing", "song"],
+    "answers": [
+      "Party time! 🎉 Let’s dance… in spirit! 💃",
+      "Vibin’ with the tunes! 🎶",
+      "DJ AI spinning the beats! 🎧",
+      "Music + chat = perfect combo! 😎",
+      "Let’s jam… in our imagination! 🕺💫"
+    ]
+  },
+  {
+    "keywords": ["confused", "lost", "huh", "idk"],
+    "answers": [
+      "No worries! I got you 😎",
+      "Let me explain that better 📝",
+      "Huh? Let’s figure it out together! 🔍",
+      "Confusion detected! Let’s clear that up 🔧",
+      "Don’t stress, we’ll make it easy! 💡"
+    ]
+  },
+  {
+    "keywords": ["silly", "goofy", "weird", "random"],
+    "answers": [
+      "Haha 😆 I can get silly too!",
+      "Weird vibes accepted! 🤪",
+      "Random is fun! 🎲",
+      "Goofy mode: ON 🤡",
+      "Let’s be playful! 😜"
+    ]
+  },
+  {
+  "keywords": ["help", "what can you do", "what do you do", "how can you help me", "what should i ask"],
+  "answers": [
+    "I can help you find fuel stations, reserve service slots, discover nearby businesses, and answer questions about SmartLink Malawi. Just ask! 😊",
+    "I’m here to guide you around SmartLink — from finding fuel to booking services and answering common questions. 💡",
+    "Think of me as your SmartLink assistant. I help you save time and avoid stress. 🚀"
+  ]
+},
+{
+  "keywords": ["is smartlink free", "do i pay", "pricing", "cost", "subscription"],
+  "answers": [
+    "Yes! SmartLink Malawi is free for users. No subscription required. 🎉",
+    "You can use SmartLink without paying anything — just sign up and go! 👍",
+    "There are no hidden charges. SmartLink is built to help everyone. 💙"
+  ]
+},
+{
+  "keywords": ["safe", "security", "is my data safe", "privacy", "secure"],
+  "answers": [
+    "Your data is handled responsibly and used only to improve your experience. 🔐",
+    "SmartLink prioritizes user privacy and secure access. 🛡️",
+    "We take safety seriously so you can use the platform with confidence. ✅"
+  ]
+},
+{
+  "keywords": ["login problem", "cant login", "forgot password", "signin issue", "account problem","can't login"],
+  "answers": [
+    "If you’re having trouble logging in, double-check your email and password first. 🔑",
+    "Login issues happen sometimes — try refreshing the page or signing in again. 😊",
+    "Still stuck? Don’t worry, help is always improving on SmartLink. 💪"
+  ]
+},
+{
+  "keywords": ["signup", "register", "create account", "join", "new account"],
+  "answers": [
+    "Creating an account is quick and easy. Just sign up and start using SmartLink right away! 🚀",
+    "Join SmartLink Malawi to access reservations, services, and smart features. ✨",
+    "New here? Welcome! Signing up takes less than a minute. 😊"
+  ]
+},
+{
+  "keywords": ["queue long", "long wait", "waiting time", "busy", "crowded"],
+  "answers": [
+    "Long queues can be frustrating — SmartLink helps you plan ahead and avoid them. ⏱️",
+    "That’s exactly why SmartLink exists: to reduce waiting time. 😌",
+    "Try using reservations to skip long queues next time! 💡"
+  ]
+},
+{
+  "keywords": ["token", "reservation token", "what is this code", "my token"],
+  "answers": [
+    "Your reservation token is your digital proof of booking — keep it safe. 🔐",
+    "That token confirms your reserved slot. Show it when required. ✅",
+    "Each reservation has a unique token so everything stays organized. 🧾"
+  ]
+},
+{
+  "keywords": ["malawi", "local", "blantyre", "lilongwe", "mzuzu"],
+  "answers": [
+    "SmartLink Malawi is proudly built for local communities. 🇲🇼",
+    "Supporting local businesses and users is at the heart of SmartLink. 💙",
+    "From Blantyre to beyond, SmartLink is growing step by step. 🚀"
+  ]
+},
+{
+  "keywords": ["future", "updates", "new features", "what's next", "roadmap"],
+  "answers": [
+    "More features are coming soon — this is just the beginning! 🔥",
+    "SmartLink is constantly evolving to serve you better. 🚀",
+    "Expect smarter tools, more businesses, and better experiences ahead. ✨"
+  ]
+},
+{
+  "keywords": ["respect", "nice app", "cool", "amazing", "good job"],
+  "answers": [
+    "Thank you! That really means a lot. 🙏",
+    "Appreciate the love! We’re glad you like SmartLink. 💙",
+    "Your support keeps the project moving forward. 🚀"
+  ]
+},
+{
+  "keywords": [
+    "add my business",
+    "register business",
+    "how do i add my shop",
+    "business owner",
+    "list my business",
+    "join smartlink as business",
+    "fuel station owner",
+    "pharmacy owner"
+  ],
+  "answers": [
+    "Business owners can join SmartLink to reach more customers and manage queues digitally. 🏪📱",
+    "SmartLink helps businesses reduce congestion and serve customers more efficiently. ⚡",
+    "Business onboarding is being expanded — stay tuned for official registration options. 🚀"
+  ]
+},
+{
+  "keywords": [
+    "benefits for businesses",
+    "why should i join smartlink",
+    "is smartlink good for my business"
+  ],
+  "answers": [
+    "SmartLink increases visibility, reduces crowding, and improves customer satisfaction. 📈",
+    "Businesses benefit from digital reservations and better traffic control. 💡",
+    "Joining SmartLink means smarter operations and happier customers. 😊"
+  ]
+},
+{
+  "keywords": ["moni", "muli bwanji", "uli bwanji", "bwanji", "zili bwanji"],
+  "answers": [
+    "Moni! Ndili bwino 😊 Inu muli bwanji?",
+    "Moni! Takulandirani ku SmartLink Malawi 🇲🇼",
+    "Zili bwino pano! Ndingakuthandizeni bwanji? 😄"
+  ]
+},
+{
+  "keywords": ["zikomo", "zikomo kwambiri", "thanks kwambiri"],
+  "answers": [
+    "Zikomo kwambiri! 🙏",
+    "Palibe vuto 😊",
+    "Ndine wokondwa kukuthandizani 💙"
+  ]
+},
+{
+  "keywords": ["ndatopa", "ndakhumudwa", "ndilibe mtima", "zandivuta"],
+  "answers": [
+    "Pepani 😔 zinthu zimavutikadi nthawi zina, koma muli bwino pano.",
+    "Osadandaula kwambiri, zinthu zidzayenda bwino 💪",
+    "Ndili nanu pano, tiyeni tikambirane pang’ono 😊"
+  ]
+},
+{
+  "keywords": ["what's up", "wassup", "sup", "how's today", "what's new"],
+  "answers": [
+    "All good here 😊 How’s your day going?",
+    "Not much, just helping people save time 😄 How about you?",
+    "Things are running smoothly ⚡ What’s up with you?",
+    "Ready to help as always 💙 What can I do for you?"
+  ]
+},
+{
+  "keywords": ["suggest", "recommend", "what can i do", "features", "show me"],
+  "answers": [
+    "You can find fuel stations, reserve slots, or explore nearby services. 📍",
+    "Try the Emergency Fuel Finder if you’re in a hurry ⛽🚨",
+    "Want to book a fuel or pharmacy slot? I can help with that.",
+    "SmartLink helps you skip queues and save time ⏱️"
+  ]
+},
+{
+  "keywords": ["first time", "new here", "how do i start", "how to use"],
+  "answers": [
+    "Welcome to SmartLink Malawi! 🇲🇼 I can help you find fuel or book a service.",
+    "Glad you’re here 😊 Want to see nearby fuel stations or learn how bookings work?",
+    "Getting started is easy! Ask me about fuel, reservations, or local services.",
+    "You’re in the right place! Let’s save you some time ⏱️"
+  ]
+},
+{
+  "keywords": ["talk more", "continue", "go on"],
+  "answers": [
+    "Sure 😊 What would you like to know next?",
+    "Alright! Fuel, bookings, or something else?",
+    "I’m with you 👍 What’s next?",
+    "Let’s continue 😄 Ask away!"
+  ]
+}
+
+
+]

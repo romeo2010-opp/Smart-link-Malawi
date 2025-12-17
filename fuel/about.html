@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartLink AI Assistant</title>
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #1b1b2f, #2e2e4d);
+    height: 100%;
+    color: #fff;
+  }
+
+  .about-ai-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px;
+    min-height: 100vh;
+  }
+
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  p.description {
+    text-align: center;
+    max-width: 600px;
+    margin-bottom: 32px;
+    color: #d0d0e0;
+    font-size: 16px;
+  }
+
+  .ai-container {
+    width: 100%;
+    max-width: 400px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, #1b1b2f, #2e2e4d);
+    border-radius: 24px;
+    padding: 16px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.6);
+  }
+
+  .ai-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .ai-header h2 {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .ai-bot {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  .ai-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    backdrop-filter: blur(8px);
+  }
+
+  .user-msg, .ai-msg {
+    padding: 12px 16px;
+    border-radius: 20px;
+    max-width: 80%;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .user-msg {
+    align-self: flex-end;
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    backdrop-filter: blur(6px);
+  }
+
+  .ai-msg {
+    align-self: flex-start;
+    background: rgba(120, 80, 240, 0.3);
+    color: #fff;
+    backdrop-filter: blur(6px);
+  }
+
+  .ai-input-container {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  #aiInput {
+    flex: 1;
+    padding: 12px 16px;
+    border-radius: 24px;
+    border: none;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    outline: none;
+  }
+
+  #aiSend {
+    padding: 12px 20px;
+    border-radius: 24px;
+    border: none;
+    background: linear-gradient(135deg, #7850f0, #a07cff);
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  #aiSend:hover {
+    transform: translateY(-2px);
+  }
+
+  .typing-indicator {
+    display: flex;
+    gap: 4px;
+  }
+
+  .typing-dot {
+    width: 8px;
+    height: 8px;
+    background: #fff;
+    border-radius: 50%;
+    animation: blink 1.4s infinite both;
+  }
+
+  .typing-dot:nth-child(1) { animation-delay: 0s; }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes blink {
+    0%, 80%, 100% { transform: scale(0); }
+    40% { transform: scale(1); }
+  }
+</style>
+</head>
+<body>
+  <div class="about-ai-page">
+    <h1>SmartLink Malawi AI Assistant</h1>
+    <p class="description">
+      Ask me anything about SmartLink Malawi! I can tell you who built the platform, how it works, emergency fuel features, reservations, and other services.
+    </p>
+
+    <div class="ai-container">
+      <div class="ai-header">
+        <img src="assets/favicon.png" alt="AI Bot" class="ai-bot">
+        <h2>SmartLink Assistant</h2>
+      </div>
+
+      <div class="ai-messages" id="aiMessages"></div>
+
+      <div class="ai-input-container">
+        <input type="text" id="aiInput" placeholder="Ask me about SmartLink Malawi...">
+        <button id="aiSend">Send</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+/* ===========================
+   DOM ELEMENTS
+=========================== */
+const input = document.getElementById('aiInput');
+const chatBox = document.getElementById('aiMessages');
+const sendBtn = document.getElementById('aiSend');
+
+/* ===========================
+   STATE
+=========================== */
+let lastTopic = null;
+let pendingFollowUp = null;
+let idleTimer;
+const IDLE_TIME = 25000; // 25 seconds
+
+/* ===========================
+   UTILS
+=========================== */
+function scrollToBottom() {
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+/* ===========================
+   TYPING EFFECT
+=========================== */
+function typeMessage(element, text, speed = 25) {
+  return new Promise((resolve) => {
+    let i = 0;
+    const interval = setInterval(() => {
+      element.textContent += text[i];
+      i++;
+      scrollToBottom();
+      if (i >= text.length) {
+        clearInterval(interval);
+        resolve();
+      }
+    }, speed);
+  });
+}
+
+/* ===========================
+   TOPIC DETECTION
+=========================== */
+function detectTopic(text) {
+  if (!text) return null;
+  const q = text.toLowerCase();
+
+  if (["token","code","reference"].some(k => q.includes(k))) return "token";
+  if (["reserve","reservation","booking","book","queue","slot","appointment"].some(k => q.includes(k))) return "reservation";
+  if (["price","cost","how much","rate","pricing"].some(k => q.includes(k))) return "pricing";
+  if (["station","pump","fuel station","nearest station"].some(k => q.includes(k))) return "station";
+  if (["fuel","petrol","diesel","gas"].some(k => q.includes(k))) return "fuel";
+  if (["hello","hi","hey","good morning","good evening"].some(k => q.includes(k))) return "greeting";
+
+  return null;
+}
+
+/* ===========================
+   IDLE HANDLING
+=========================== */
+function resetIdleTimer() {
+  clearTimeout(idleTimer);
+  idleTimer = setTimeout(sendIdleMessage, IDLE_TIME);
+}
+
+async function sendIdleMessage() {
+  const idleDiv = document.createElement('div');
+  idleDiv.classList.add('ai-msg');
+  chatBox.appendChild(idleDiv);
+  scrollToBottom();
+
+  await typeMessage(
+    idleDiv,
+    "Still there? 😊 You can ask me about fuel availability, reservations, or anything about SmartLink Malawi."
+  );
+}
+
+/* ===========================
+   FOLLOW-UP PROMPTS
+=========================== */
+const followUpMap = {
+  fuel: [
+    "Would you like me to check which fuel stations currently have stock?",
+    "I can also help you find the nearest station with available fuel."
+  ],
+  reservation: [
+    "Do you want me to help you create a reservation now?",
+    "I can guide you through reserving a time slot if you want."
+  ],
+  token: [
+    "Would you like to see how your reservation token is used at the station?",
+    "I can explain how to retrieve or use your token."
+  ],
+  station: [
+    "Would you like me to check station availability near your location?",
+    "I can help compare stations if you want."
+  ],
+  pricing: [
+    "Would you like current fuel prices from nearby stations?",
+    "I can check price differences between stations."
+  ],
+  greeting: [
+    "What would you like help with today?",
+    "You can ask me about fuel, stations, or reservations."
+  ]
+};
+
+/* ===========================
+   SHOW FOLLOW-UP
+=========================== */
+function showFollowUp(topic) {
+  if (!followUpMap[topic]) return;
+
+  const options = followUpMap[topic];
+  const followText = options[Math.floor(Math.random() * options.length)];
+
+  pendingFollowUp = { topic, text: followText };
+
+  const followDiv = document.createElement('div');
+  followDiv.classList.add('ai-msg');
+  chatBox.appendChild(followDiv);
+  scrollToBottom();
+
+  typeMessage(followDiv, followText, 20);
+}
+
+/* ===========================
+   ASK AI
+=========================== */
+async function askAI(question) {
+  try {
+    const typingDiv = document.createElement('div');
+    typingDiv.classList.add('ai-msg');
+    typingDiv.innerHTML = `
+      <div class="typing-indicator">
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+      </div>
+    `;
+    chatBox.appendChild(typingDiv);
+    scrollToBottom();
+
+    const res = await fetch('/about-ai', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question })
+    });
+
+    const data = await res.json();
+
+    typingDiv.innerHTML = '';
+    await typeMessage(typingDiv, data.reply);
+
+  } catch (err) {
+    console.error('AI error:', err);
+
+    const errorDiv = document.createElement('div');
+    errorDiv.classList.add('ai-msg');
+    errorDiv.textContent = "I'm having trouble responding right now 😔";
+    chatBox.appendChild(errorDiv);
+    scrollToBottom();
+  }
+}
+
+/* ===========================
+   SEND MESSAGE
+=========================== */
+function sendMessage() {
+  const userText = input.value.trim();
+  if (!userText) return;
+
+  const userDiv = document.createElement('div');
+  userDiv.classList.add('user-msg');
+  userDiv.textContent = userText;
+  chatBox.appendChild(userDiv);
+  scrollToBottom();
+
+  input.value = '';
+
+  // If pending follow-up exists and user says yes, send it to /about-ai
+  if (pendingFollowUp && ["yes","sure","ok","yep"].includes(userText.toLowerCase())) {
+    askAI(pendingFollowUp.text);
+    pendingFollowUp = null;
+  } else {
+    askAI(userText);
+    pendingFollowUp = null; // clear follow-up if user says anything else
+  }
+
+  lastTopic = detectTopic(userText);
+
+  // Only show new follow-up if topic is recognized
+  if (lastTopic) showFollowUp(lastTopic);
+
+  resetIdleTimer();
+}
+
+/* ===========================
+   EVENT LISTENERS
+=========================== */
+sendBtn.addEventListener('click', sendMessage);
+
+input.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+
+['mousemove', 'keydown', 'click'].forEach(evt =>
+  document.addEventListener(evt, resetIdleTimer)
+);
+
+/* ===========================
+   INITIAL MESSAGE
+=========================== */
+window.addEventListener('load', async () => {
+  resetIdleTimer();
+
+  const welcomeDiv = document.createElement('div');
+  welcomeDiv.classList.add('ai-msg');
+  chatBox.appendChild(welcomeDiv);
+  scrollToBottom();
+
+  await typeMessage(
+    welcomeDiv,
+    "Hi! 👋 I’m your SmartLink assistant. You can ask me about fuel stations, reservations, or how the platform works."
+  );
+});
+
+</script>
+</body>
+</html>

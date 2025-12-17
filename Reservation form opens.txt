@@ -1,0 +1,95 @@
+Reservation form opens:
+
+User selects:
+
+Fuel type: Petrol / Diesel
+
+Litres: 10L / 20L / 30L / 50L
+
+Time slot:
+
+Today: 14:00–15:00
+
+Today: 16:00–17:00
+
+Tomorrow: 08:00–09:00
+
+System shows:
+
+Reservation Fee: 500 MK
+
+Estimated Pump Price (info only)
+
+Final notice:
+
+“Fuel price is paid at the station. Reservation fee is non-refundable.”
+
+
+////Sample SMS message
+“SmartLink Fuel Reservation:
+Code: SLF-92831
+Station: Puma Limbe
+Fuel: 20L Petrol
+Time: 14:00–15:00”
+
+///other features
+7. Fuel History & Spending Tracker
+
+Users see:
+
+Total fuel purchased
+
+Monthly fuel spending
+
+Average fuel cost
+
+💡 Very useful for:
+
+Taxi drivers
+
+Small businesses
+
+Delivery riders
+
+✅ 8. Emergency Fuel Finder
+
+One-tap:
+
+“Find ANY available fuel within 20km RIGHT NOW”
+
+4. Fuel Price Tracking & History
+
+Show:
+
+Current fuel price per station
+
+Weekly & monthly price trends
+
+“Cheapest fuel near me today”
+
+///most important
+✅ 2. Queue Length & Waiting Time Prediction
+
+Live estimated queue size:
+
+Short / Medium / Long
+
+AI-based wait time:
+
+“Approx. wait: 25–40 minutes”
+
+✅ 1. Real-Time Fuel Availability Alerts (MOST POWERFUL)
+
+Users get:
+
+Instant push notifications when:
+
+Fuel becomes available nearby
+
+A station restocks
+
+Fuel is about to finish
+
+Custom alerts:
+
+“Notify me when petrol is available within 5km”

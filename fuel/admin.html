@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartLink Malawi – Dashboard</title>
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --primary: #1a73e8; /* SmartLink Blue */
+      --accent: #22c55e; /* Growth / Malawi Green */
+      --primary-soft: #e8f0fe;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e5e7eb;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+    body { background: var(--bg); color: var(--text); }
+
+    /* ===== APP LAYOUT ===== */
+    .app { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; }
+
+    /* ===== SIDEBAR ===== */
+    aside {
+      background: var(--card);
+      border-right: 1px solid var(--border);
+      padding: 22px 18px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--primary);
+      margin-bottom: 32px;
+    }
+
+    .menu h5 {
+      font-size: 11px;
+      color: var(--muted);
+      margin: 20px 10px 8px;
+      text-transform: uppercase;
+    }
+
+    .menu button {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--muted);
+      transition: all 0.25s ease;
+    }
+
+    .menu button i { font-size: 18px; }
+
+    .menu button.active,
+    .menu button:hover {
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-weight: 600;
+      transform: translateX(4px);
+    }
+
+    .upgrade {
+      margin-top: auto;
+      background: linear-gradient(135deg, var(--primary), #0b5ed7);
+      color: #fff;
+      padding: 18px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    /* ===== MAIN ===== */
+    main { padding: 24px 28px; }
+
+    /* ===== TOPBAR ===== */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 26px;
+    }
+
+    .search {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 10px 16px;
+      width: 300px;
+      transition: box-shadow 0.25s ease;
+    }
+
+    .search:focus-within { box-shadow: 0 0 0 4px var(--primary-soft); }
+    .search input { border: none; outline: none; width: 100%; }
+
+    .top-actions { display: flex; align-items: center; gap: 12px; }
+
+    .icon-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .icon-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+
+    /* ===== DASHBOARD GRID ===== */
+    .dashboard { display: grid; grid-template-columns: 1fr 420px; gap: 24px; }
+
+    /* ===== KPI CARDS ===== */
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+    .stat {
+      background: var(--card);
+      padding: 18px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat::after {
+      content: '';
+      position: absolute;
+      inset: auto -40% -60% auto;
+      width: 120px;
+      height: 120px;
+      background: var(--primary-soft);
+      border-radius: 50%;
+    }
+
+    .stat h6 { color: var(--muted); font-size: 13px; margin-bottom: 8px; }
+    .stat strong { font-size: 22px; }
+
+    /* ===== SERVICES ACTIVITY ===== */
+    .chart {
+      margin-top: 22px;
+      background: var(--card);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .bars { display: flex; align-items: flex-end; gap: 14px; height: 190px; margin-top: 20px; }
+    .bar { flex: 1; background: #e5ecf6; border-radius: 10px; overflow: hidden; }
+    .bar span {
+      display: block;
+      width: 100%;
+      background: linear-gradient(180deg, var(--primary), #0b5ed7);
+      border-radius: 10px;
+      animation: grow 1.2s ease;
+    }
+
+    @keyframes grow { from { height: 0; } to { height: 100%; } }
+
+    /* ===== TABLE ===== */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 22px;
+      background: var(--card);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    th, td { padding: 14px 16px; font-size: 14px; border-bottom: 1px solid var(--border); }
+    th { background: #f9fafb; color: var(--muted); text-align: left; }
+
+    .status {
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .active { background: #ecfeff; color: #0e7490; }
+    .pending { background: #fff7ed; color: #c2410c; }
+
+    /* ===== RIGHT COLUMN ===== */
+    .side { display: flex; flex-direction: column; gap: 24px; }
+
+    .map {
+      background: var(--card);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .map-box {
+      height: 220px;
+      background: linear-gradient(135deg, #dbeafe, #eff6ff);
+      border-radius: 14px;
+      margin-bottom: 14px;
+      position: relative;
+    }
+
+    .pulse {
+      width: 14px;
+      height: 14px;
+      background: var(--accent);
+      border-radius: 50%;
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 0 rgba(34, 197, 94, 0.6);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(34,197,94,0.6); }
+      70% { box-shadow: 0 0 0 20px rgba(34,197,94,0); }
+      100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1200px) {
+      .dashboard { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+    }
+
+ /* Fuel Section Container */
+.fuel-section {
+  background: #f9fafc;
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid #e0e6ef;
+  margin-top: 20px;
+  font-family: "Inter", sans-serif;
+}
+
+/* Section Header */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+.section-header h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1f36;
+}
+.badge {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.badge.live {
+  background: #e6f9ec;
+  color: #2e7d32;
+  border: 1px solid #b2dfdb;
+}
+
+/* Grid Layout */
+.stations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px;
+}
+
+/* Station Card */
+.station-card {
+  background: #ffffff;
+  border: 1px solid #e0e6ef;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.station-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* Station Top */
+.station-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.station-top h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1f36;
+}
+.status {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.status.open {
+  background: #e6f9ec;
+  color: #2e7d32;
+  border: 1px solid #b2dfdb;
+}
+.status.busy {
+  background: #fff3e0;
+  color: #ef6c00;
+  border: 1px solid #ffcc80;
+}
+
+/* Fuel Level */
+.fuel-level label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 6px;
+  display: block;
+}
+.progress {
+  background: #e5e7eb;
+  border-radius: 8px;
+  height: 10px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: #4f8cff;
+  border-radius: 8px;
+  transition: width 0.3s ease;
+}
+.progress-fill.low {
+  background: #ff6b6b;
+}
+.fuel-level small {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 4px;
+  display: block;
+}
+
+/* Station Meta */
+.station-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #4b5563;
+}
+
+/* Reserve Button */
+.reserve-btn {
+  background: linear-gradient(135deg, #4f8cff, #6aa2ff);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.reserve-btn:hover {
+  background: linear-gradient(135deg, #3f7ae0, #5a92f0);
+  transform: translateY(-1px);
+}
+
+ 
+  </style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside>
+    <div class="logo"><i class="ri-node-tree"></i> SmartLink Malawi</div>
+
+    <div class="menu">
+      <h5>Main</h5>
+      <button class="active" onclick="setNav(this), openNav('dashboard')"><i class="ri-dashboard-line"></i> Dashboard</button>
+      <button onclick="setNav(this), openNav('fuel-station')"><i class="ri-gas-station-line"></i> Fuel Stations</button>
+      <button onclick="setNav(this), openNav('local-shops')"><i class="ri-store-2-line"></i> Local Shops</button>
+      <button onclick="setNav(this), openNav('Reservations')"><i class="ri-calendar-check-line"></i> Reservations</button>
+      <button onclick="setNav(this), openNav('Analytics')"><i class="ri-bar-chart-line"></i> Analytics</button>
+
+      <h5>Management</h5>
+      <button onclick="setNav(this)"><i class="ri-team-line"></i> Users</button>
+      <button onclick="setNav(this)"><i class="ri-settings-3-line"></i> System Settings</button>
+    </div>
+
+    <div class="upgrade">SmartLink Pro<br><small>Advanced analytics & automation</small></div>
+  </aside>
+
+  <!-- MAIN -->
+  <main>
+
+    <!-- TOPBAR -->
+    <header>
+      <div class="search"><i class="ri-search-line"></i><input placeholder="Search stations, shops, users..."></div>
+      <div class="top-actions">
+        <div class="icon-btn"><i class="ri-notification-3-line"></i></div>
+        <div class="icon-btn"><i class="ri-user-3-line"></i></div>
+      </div>
+    </header>
+
+    <!-- DASHBOARD -->
+    <section class="dashboard section" id="dashboard">
+
+      <div>
+        <div class="stats">
+          <div class="stat"><h6>Fuel Stations</h6><strong>128</strong></div>
+          <div class="stat"><h6>Local Shops</h6><strong>342</strong></div>
+          <div class="stat"><h6>Active Reservations</h6><strong>96</strong></div>
+          <div class="stat"><h6>Daily Transactions</h6><strong>1,284</strong></div>
+        </div>
+
+        <div class="chart">
+          <h4>Service Usage (Weekly)</h4>
+          <div class="bars">
+            <div class="bar"><span style="height:65%"></span></div>
+            <div class="bar"><span style="height:80%"></span></div>
+            <div class="bar"><span style="height:90%"></span></div>
+            <div class="bar"><span style="height:72%"></span></div>
+            <div class="bar"><span style="height:85%"></span></div>
+          </div>
+        </div>
+
+        <table>
+          <thead>
+            <tr><th>ID</th><th>Type</th><th>Location</th><th>Status</th></tr>
+          </thead>
+          <tbody id="table">
+            <tr><td>RS-1201</td><td>Fuel Reservation</td><td>Blantyre</td><td><span class="status active">Active</span></td></tr>
+            <tr><td>RS-1208</td><td>Shop Order</td><td>Lilongwe</td><td><span class="status pending">Pending</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="side">
+        <div class="map">
+          <h4>Live Activity Map</h4>
+          <div class="map-box"><div class="pulse">&emsp; Blantyre</div></div>
+          <small>Real-time service activity across Malawi</small>
+        </div>
+      </div>
+
+    </section>
+
+
+    <section class="fuel-section section" style="display:none;" id="fuel-station">
+      <div class="section-header">
+        <h3>Fuel Stations – Blantyre</h3>
+        <span class="badge live">LIVE</span>
+        </div>
+
+
+        <div class="stations-grid">
+
+
+        <!-- Station Card -->
+        <div class="station-card live">
+          <div class="station-top">
+          <h4>Total Filling Station</h4>
+          <span class="status open">Open</span>
+          </div>
+
+
+          <div class="fuel-level">
+          <label>Fuel Availability</label>
+          <div class="progress">
+          <div class="progress-fill" style="width: 72%"></div>
+          </div>
+          <small>72% remaining</small>
+          </div>
+
+
+          <div class="station-meta">
+          <span>⛽ Petrol</span>
+          <span>⏱ Queue: 15 min</span>
+          </div>
+
+
+          <button class="reserve-btn">Reserve Fuel</button>
+        </div>
+
+
+        <!-- Station Card -->
+        <div class="station-card live">
+          <div class="station-top">
+          <h4>Romeo</h4>
+          <span class="status open">Open</span>
+          </div>
+
+
+          <div class="fuel-level">
+          <label>Fuel Availability</label>
+          <div class="progress">
+          <div class="progress-fill" style="width: 72%"></div>
+          </div>
+          <small>72% remaining</small>
+          </div>
+
+
+          <div class="station-meta">
+          <span>⛽ Petrol</span>
+          <span>⏱ Queue: 15 min</span>
+          </div>
+
+
+          <button class="reserve-btn">Reserve Fuel</button>
+        </div>
+
+
+        <!-- Station Card -->
+        <div class="station-card live">
+          <div class="station-top">
+          <h4>Total Filling Station</h4>
+          <span class="status open">Open</span>
+          </div>
+
+
+          <div class="fuel-level">
+          <label>Fuel Availability</label>
+          <div class="progress">
+          <div class="progress-fill" style="width: 72%"></div>
+          </div>
+          <small>72% remaining</small>
+          </div>
+
+
+          <div class="station-meta">
+          <span>⛽ Petrol</span>
+          <span>⏱ Queue: 15 min</span>
+          </div>
+
+
+          <button class="reserve-btn">Reserve Fuel</button>
+        </div>
+
+        <!-- Station Card -->
+        <div class="station-card">
+        <div class="station-top">
+        <h4>Puma Energy – Limbe</h4>
+        <span class="status busy">Busy</span>
+        </div>
+
+
+        <div class="fuel-level">
+        <label>Fuel Availability</label>
+        <div class="progress">
+        <div class="progress-fill low" style="width: 35%"></div>
+        </div>
+        <small>Low stock</small>
+
+</section>
+  </main>
+</div>
+
+<script>
+  function setNav(btn) {
+    document.querySelectorAll('.menu button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  function openNav(name){ 
+    document.querySelectorAll('.section').forEach(el => {
+      el.style.display = 'none';
+    });
+    document.getElementById(name).style.display = 'block';
+  }
+
+  let stations = [];
+   async function fetchStations(){
+    try{
+      const res = await fetch('https://shipping-poetry-queen-mold.trycloudflare.com/fuel'); // replace with your API
+      const data = await res.json();
+      stations = data.map(s => ({
+        id: s.id || '',
+        name: s.name || s.station_name || 'Unknown',
+        city: (s.city || s.town || '').toString(),
+        rating: s.rating || 0,
+        status: (s.status || 'closed').toString().toLowerCase(),
+        image: s.image || '',
+        opening: s.opening || 'N/A',
+        reservations: s.reservations || false,
+        reservationsWindow : s.reservationsWindow || 'N/A',
+        services: s.services || 'Fuel, Car Wash, Snacks',
+        fuelTypes: s.fuelTypes || 'Petrol, Diesel, LPG',/* .
+        03++jh\/
+        price: s.price || '$3.60/Gallon',
+        queue_level: s.queue_level || 'short',
+        wait_min: Number(s.avg_wait_min || 10),
+        wait_max: Number(s.avg_wait_max || 20)
+      }));
+      console.log(s.name);
+    }catch(err){
+      console.error('Failed to load stations', err);
+    }
+  }
+
+
+  fetchStations();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+CREATE TABLE reservations (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+
+    user_id INT NOT NULL,
+    business_id INT NOT NULL,             -- fuel station ID or other business ID
+    type ENUM('fuel', 'other') NOT NULL,  -- tells us which table to join
+
+    -- FUEL RESERVATION FIELDS (only used when type = 'fuel')
+    fuel_type ENUM('petrol', 'diesel', 'paraffin', 'gas', 'other') NULL,
+    fuel_amount DECIMAL(10,2) NULL,       -- liters or kwacha depending on your UI
+    fuel_time DATETIME NULL,              -- when the user wants to fuel
+
+    -- OTHER BUSINESS RESERVATION FIELDS
+    service_name VARCHAR(100) NULL,       -- e.g., “Haircut”, “Consultation”
+    service_time DATETIME NULL,           -- time for non-fuel reservations
+
+    status ENUM('pending', 'confirmed', 'completed', 'cancelled') 
+        DEFAULT 'pending',
+
+    token VARCHAR(200) NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    INDEX (user_id),
+    INDEX (business_id),
+    INDEX (type),
+    INDEX (status)
+);

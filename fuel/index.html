@@ -1,0 +1,788 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Recommended Fuel Station — Mock</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="assets/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+
+</style>
+<body>
+  <div class="app" role="application">
+    <div class="topbar fade-in">
+      <div class="avatar"><img src="https://i.pravatar.cc/100?img=3" alt="avatar"></div>
+      <div class="location">
+        <div class="where"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="#fff" stroke-opacity="0.95" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>From Malawi</span></div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.45)"> </div>
+      </div>
+      <div class="bell" title="Notifications">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 17H9" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/><path d="M12 3v1" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/><path d="M18 8a6 6 0 10-12 0v4l-2 2h16l-2-2V8z" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/></svg>
+      </div>
+    </div>
+
+    <div class="hero" role="img" aria-label="Hero image">
+      <div class="hero-content fade-in delay-1">
+        <div class="tag">Fuel Station</div>
+        <div class="title">Recommended<br>Fuel Station</div>
+        <div class="meta">
+          <div>MKW 3500 Per Litre · Fuel + Services</div>
+          <div class="pill">24/7</div>
+        </div>
+
+        <div class="search-wrap">
+          <div class="search" role="search" aria-label="Search fuel stations">
+            <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 21l-4.35-4.35" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/><circle cx="11" cy="11" r="6" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/></svg>
+            <input id="searchInput" placeholder="Search fuel stations by name or city" aria-label="Search fuel stations" />
+          </div>
+          
+          <button class="filter" id="openFilter" aria-haspopup="true" aria-expanded="false" aria-controls="filterPanel" title="Open filters">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6h16M7 12h10M10 18h4" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/></svg>
+          </button>
+        </div>
+
+          <button class="emergency-btn" id="emergencyFinder">
+            ⚠ Emergency Fuel
+          </button>
+
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="section-header">
+        <h3>Recommended for You</h3>
+        <div class="viewall">View all</div>
+      </div>
+
+      <div class="cards" id="cards" tabindex="0"></div>
+    </div>
+
+    <div class="bottom-nav">
+      <div class="nav-row fade-in delay-3">
+        <div class="nav-item active">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 11.5L12 4l9 7.5" stroke="#00c853" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div style="font-weight:700">Home</div>
+        </div>
+        <div class="nav-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="#fff" stroke-opacity="0.8" stroke-width="1.2"/></svg>
+          <div>Map</div>
+        </div>
+        <div class="nav-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 5v14M5 12h14" stroke="#fff" stroke-opacity="0.85" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div>Bookings</div>
+        </div>
+        <div class="nav-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6h16M4 12h10M4 18h16" stroke="#fff" stroke-opacity="0.85" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div onclick="showReservations()">Reservations</div>
+        </div>
+        <div class="nav-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="7" r="3" stroke="#fff" stroke-opacity="0.85" stroke-width="1.2"/><path d="M5 21c1.5-3 5-5 7-5s5.5 2 7 5" stroke="#fff" stroke-opacity="0.85" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div>Account</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter Panel -->
+    <div class="filter-panel" id="filterPanel" role="dialog" aria-modal="false" aria-hidden="true">
+      <div class="filter-header">Advanced Filters</div>
+
+      <label for="statusFilter">Status</label>
+      <select id="statusFilter">
+        <option value="">All</option>
+        <option value="available">Open</option>
+        <option value="low">Low</option>
+        <option value="out">Closed</option>
+      </select>
+
+      <label for="ratingFilter">Minimum Rating</label>
+      <select id="ratingFilter">
+        <option value="">Any</option>
+        <option value="5">5+</option>
+        <option value="4">4+</option>
+        <option value="3">3+</option>
+      </select>
+
+      <label for="cityFilter">Location</label>
+      <select id="cityFilter">
+        <option value="">All Cities</option>
+        <option value="blantyre">Blantyre</option>
+        <option value="lilongwe">Lilongwe</option>
+        <option value="mzuzu">Mzuzu</option>
+      </select>
+
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button class="apply-filter" id="applyFilter">Apply</button>
+        <button class="apply-filter" id="resetFilter" style="background:transparent;border:1px solid rgba(255,255,255,.06);color:#fff">Reset</button>
+      </div>
+    </div>
+
+        <!-- Fuel Station Detail Modal -->
+    <div class="station-modal" id="stationModal" role="dialog" aria-hidden="true">
+      <div class="station-modal-content">
+        <button class="close-modal" id="closeModal">×</button>
+        <div class="station-details" id="stationDetails">
+          <!-- Details injected dynamically -->
+        </div>
+      </div>
+
+ <div class="reservation-form" id="reservationFormWrapper" style="display:none;">
+  <button class="rf-close" aria-label="Close Reservation">×</button>
+
+  <h3 class="rf-title">Make Reservation</h3>
+  <h2 id="rfStationName"></h2>
+
+  <!-- Reservation Type -->
+  <div class="rf-group">
+    <label>Reservation Type</label>
+    <select name="reservationType" id="reservationType">
+      <option value="fuel">Fuel</option>
+      <option value="other">Other Service</option>
+    </select>
+  </div>
+
+  <!-- Fuel Fields -->
+  <div id="fuelFields">
+    <div class="rf-group">
+      <label>Fuel Type</label>
+      <select name="fuelType">
+        <option value="petrol">Petrol</option>
+        <option value="diesel">Diesel</option>
+        <option value="paraffin">Paraffin</option>
+        <option value="gas">Gas</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+
+    <div class="rf-group">
+      <label>Litres</label>
+      <select name="litres">
+        <option>10</option>
+        <option>20</option>
+        <option>30</option>
+        <option>50</option>
+      </select>
+    </div>
+
+    <div class="rf-group">
+      <label>Time Slot</label>
+      <input type="time" name="fuelTime">
+    </div>
+  </div>
+
+  <!-- Other Service Fields -->
+  <div id="serviceFields" style="display:none;">
+    <div class="rf-group">
+      <label>Service Name</label>
+      <input type="text" name="serviceName" placeholder="e.g., Haircut, Consultation">
+    </div>
+    <div class="rf-group">
+      <label>Service Time</label>
+      <input type="datetime-local" name="serviceTime">
+    </div>
+  </div>
+
+  <!-- System Info -->
+  <div class="rf-summary">
+    <div class="rf-row">
+      <span>Reservation Fee</span>
+      <strong>MK 500</strong>
+    </div>
+    <div class="rf-row">
+      <span>Estimated Price</span>
+      <strong>Info Only</strong>
+    </div>
+  </div>
+
+  <!-- Final Notice -->
+  <div class="rf-notice">
+    Payment is done at the station.  
+    Reservation fee is non-refundable.
+  </div>
+
+  <!-- Action Button -->
+  <button class="rf-submit">Confirm Reservation</button>
+</div>
+    </div>
+
+    <section class="explore-more">
+  <h3>Explore More</h3>
+  <div id="otherBusinesses" class="cards"></div>
+</section>
+
+<!-- ================= RESERVATIONS SECTION ================= -->
+<section id="reservations-section" class="page-section hidden glass-page">
+
+  <div class="reservations-header glass-box">
+    <h2>Reservations</h2>
+    <p class="subtitle">Manage all your upcoming reservations in one place.</p>
+  </div>
+
+  <div id="reservationList" class="reservation-list glass-list">
+    <!-- Dynamic Items Inserted by JS -->
+  </div>
+
+  <!-- Floating Add Button -->
+  <button id="addReservationBtn" class="floating-btn glass-floating">+</button>
+
+</section>
+
+  </div>
+<footer class="app-footer">
+  <div class="footer-glass">
+    
+    <div class="footer-brand">
+      <div class="brand-logo">RFM</div>
+      <div class="brand-text">
+        <strong>SmartLink Malawi</strong>
+        <span>Powered by Romeo Favour Mbeya</span>
+      </div>
+    </div>
+
+    <div class="footer-links">
+      <a href="about.html">About</a>
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="about.html">SmartLink AI Assistant</a>
+      <a href="#">API Status</a>
+    </div>
+
+    <div class="footer-meta">
+      <span>© <span id="year"></span> SmartLink Malawi</span>
+      <span>All rights reserved.</span>
+    </div>
+
+  </div>
+</footer>
+<br>
+<br>
+
+<script>
+  // Toggle fields based on reservation type
+  const reservationType = document.getElementById('reservationType');
+  const fuelFields = document.getElementById('fuelFields');
+  const serviceFields = document.getElementById('serviceFields');
+
+  reservationType.addEventListener('change', () => {
+    if (reservationType.value === 'fuel') {
+      fuelFields.style.display = 'block';
+      serviceFields.style.display = 'none';
+    } else {
+      fuelFields.style.display = 'none';
+      serviceFields.style.display = 'block';
+    }
+  });
+</script>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+<script>
+  // App elements
+  let activeStation = null;
+  const cards = document.getElementById('cards');
+  const searchInput = document.getElementById('searchInput');
+  const openFilter = document.getElementById('openFilter');
+  const filterPanel = document.getElementById('filterPanel');
+  const statusFilter = document.getElementById('statusFilter');
+  const ratingFilter = document.getElementById('ratingFilter');
+  const cityFilter = document.getElementById('cityFilter');
+  const applyFilter = document.getElementById('applyFilter');
+  const resetFilter = document.getElementById('resetFilter');
+
+  let stations = [];
+
+  // Accessibility: close filter on outside click or Esc
+  document.addEventListener('click', (e)=>{
+    if (!filterPanel.contains(e.target) && !openFilter.contains(e.target)){
+      closeFilterPanel();
+    }
+  });
+  document.addEventListener('keydown', (e)=>{
+    if (e.key === 'Escape') closeFilterPanel();
+  });
+
+  function openFilterPanel(){
+    filterPanel.style.display = 'flex';
+    filterPanel.setAttribute('aria-hidden','false');
+    openFilter.setAttribute('aria-expanded','true');
+  }
+  function closeFilterPanel(){
+    filterPanel.style.display = 'none';
+    filterPanel.setAttribute('aria-hidden','true');
+    openFilter.setAttribute('aria-expanded','false');
+  }
+
+  openFilter.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    const visible = filterPanel.style.display === 'flex';
+    if (visible) closeFilterPanel(); else openFilterPanel();
+  });
+
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  async function fetchStations(){
+    try{
+      const res = await fetch('/fuel'); // replace with your API
+      const data = await res.json();
+      stations = data.map(s => ({
+        id: s.id || '',
+        name: s.name || s.station_name || 'Unknown',
+        city: (s.city || s.town || '').toString(),
+        rating: s.rating || 0,
+        status: (s.status || 'closed').toString().toLowerCase(),
+        image: s.image || '',
+        opening: s.opening || 'N/A',
+        reservations: s.reservations || false,
+        reservationsWindow : s.reservationsWindow || 'N/A',
+        services: s.services || 'Fuel, Car Wash, Snacks',
+        fuelTypes: s.fuelTypes || 'Petrol, Diesel, LPG',
+        price: s.price || '$3.60/Gallon',
+        queue_level: s.queue_level || 'short',
+        wait_min: Number(s.avg_wait_min || 10),
+        wait_max: Number(s.avg_wait_max || 20)
+      }));
+      renderStations();
+    }catch(err){
+      console.error('Failed to load stations', err);
+      cards.innerHTML = '<div style="padding:20px;color:var(--muted)">Unable to load stations from API.</div>';
+    }
+  }
+
+  function escapeHtml(str){
+    return String(str).replace(/[&<>\"']/g, function (s) { return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"})[s]; });
+  }
+
+  // ----- Modal Elements -----
+  const stationModal = document.getElementById('stationModal');
+  const stationDetails = document.getElementById('stationDetails');
+  const closeModal = document.getElementById('closeModal');
+
+  // ----- Show modal with details -----
+  function showStationModal(station) {
+    const reservationButtonDisabled = !station.reservations;
+    const reservationButtonStyle = reservationButtonDisabled 
+      ? 'flex:1;padding:10px;border-radius:10px;background:#ccc;color:#666;font-weight:700;cursor:not-allowed'
+      : 'flex:1;padding:10px;border-radius:10px;background:linear-gradient(180deg,#ffab00,#ff6f00);border:none;color:#000;font-weight:700;cursor:pointer';
+
+    stationDetails.innerHTML = `
+      <img src="${station.image || 'https://picsum.photos/400/300?random=50'}" alt="${escapeHtml(station.name)}" style="border-radius:12px;object-fit:cover;width:100%;height:200px">
+      <h4 style="margin-top:12px">${escapeHtml(station.name)}</h4>
+      <div class="meta" style="display:flex;justify-content:space-between;font-size:13px;margin:6px 0">
+        <span>${escapeHtml(station.city)}</span>
+        <span>⭐ ${Number(station.rating).toFixed(1)}</span>
+      </div>
+      <p><strong>Status:</strong> ${station.status}</p>
+      <p><strong>Opening Hours:</strong> ${station.opening}</p>
+      <p><strong>Reservations:</strong> ${station.reservations ? 'On' : 'Off'}</p>
+      <p><strong>Services:</strong> ${station.services}</p>
+      <p><strong>Fuel Types:</strong> ${station.fuelTypes}</p>
+      <p><strong>Price:</strong> ${station.price}</p>
+      <div class="queue-box status-${station.queue_level}">
+      <div class="queue-row">
+        <span>Queue Length</span>
+        <strong>${station.queue_level.toUpperCase()}</strong>
+      </div>
+      <div class="queue-row">
+        <span>AI Wait Time</span>
+        <strong>Approx. ${station.wait_min}–${station.wait_max} minutes</strong>
+      </div>
+      </div>
+      <div class="actions" style="display:flex;gap:8px;margin-top:10px">
+        <button style="flex:1;padding:10px;border-radius:10px;background:linear-gradient(180deg,#00c853,#009e40);border:none;color:#000;font-weight:700;cursor:pointer" onclick="alert('Directions functionality coming soon')">Get Directions</button>
+        <button style="flex:1;padding:10px;border-radius:10px;background:linear-gradient(180deg,#00c85333,#00c85311);border:none;color:#00c853;font-weight:700;cursor:pointer" onclick="alert('Reviews functionality coming soon')">View Reviews</button>
+        <button style="${reservationButtonStyle}" ${reservationButtonDisabled ? 'disabled' : ''} class="${reservationButtonDisabled ? '' : 'makeReservationBtn'}">Make Reservation</button>
+      </div>
+    `;
+    stationModal.style.display = 'flex';
+    stationModal.setAttribute('aria-hidden', 'false');
+  }
+
+  // ----- Close modal -----
+  closeModal.addEventListener('click', () => {
+    stationModal.style.display = 'none';
+    stationModal.setAttribute('aria-hidden', 'true');
+  });
+
+  // Close when clicking outside content
+  stationModal.addEventListener('click', (e) => {
+    if (e.target === stationModal) closeModal.click();
+  });
+
+  // ----- Render Stations -----
+  function renderStations(){
+    cards.innerHTML = '';
+    const q = (searchInput.value || '').toLowerCase();
+    const statusVal = statusFilter.value;
+    const ratingVal = ratingFilter.value ? Number(ratingFilter.value) : null;
+    const cityVal = (cityFilter.value || '').toLowerCase();
+
+    const filtered = stations.filter(s=>{
+      const nameMatch = s.name.toLowerCase().includes(q);
+      const cityMatch = s.city.toLowerCase().includes(q);
+      const matchesQuery = (q.length ===0) || nameMatch || cityMatch;
+      const statusMatch = statusVal ? s.status === statusVal : true;
+      const ratingMatch = ratingVal ? Number(s.rating) >= ratingVal : true;
+      const cityMatchPreset = cityVal ? s.city.toLowerCase() === cityVal : true;
+      return matchesQuery && statusMatch && ratingMatch && cityMatchPreset;
+    });
+
+    if (filtered.length ===0){
+      cards.innerHTML = '<div style="padding:18px;color:var(--muted)">No stations found. Try adjusting filters.</div>';
+      return;
+    }
+
+    const shuffled = shuffleArray(filtered);
+
+    shuffled.forEach((s,i)=>{
+      const card = document.createElement('article');
+      card.className = `card fade-in delay-2 status-${s.status}`;
+      const statusLabel = s.status;
+      card.innerHTML = `
+        <div class="thumb">
+          <img src="${s.image || 'https://picsum.photos/400/300?random=' + (100+i)}" alt="${escapeHtml(s.name)}">
+          <div class="status">${statusLabel}</div>
+        </div>
+        <h4>${escapeHtml(s.name)}</h4>
+        <div class="meta">
+          <span>${escapeHtml(s.city)}</span>
+          <span>⭐ ${Number(s.rating).toFixed(1)}</span>
+        </div>
+      `;
+      // Add click listener to open modal
+     card.addEventListener('click', () => {
+      activeStation = s;          // ✅ Track which station was clicked
+      showStationModal(s);
+});
+
+      cards.appendChild(card);
+    });
+  }
+
+  // ----- Live search with debounce -----
+  let debounceTimer = null;
+  searchInput.addEventListener('input', ()=>{
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(renderStations, 220);
+  });
+
+  // ----- Apply/Reset filters -----
+  applyFilter.addEventListener('click', ()=>{ closeFilterPanel(); renderStations(); });
+  resetFilter.addEventListener('click', ()=>{ statusFilter.value=''; ratingFilter.value=''; cityFilter.value=''; renderStations(); closeFilterPanel(); });
+
+  // ----- Keyboard accessible scroll -----
+  const cardsEl = document.querySelector('.cards');
+  cardsEl.addEventListener('keydown', (e)=>{
+    if(e.key === 'ArrowRight') cardsEl.scrollBy({left:200, behavior:'smooth'});
+    if(e.key === 'ArrowLeft') cardsEl.scrollBy({left:-200, behavior:'smooth'});
+  });
+
+  // ----- Initial load -----
+  fetchStations();
+
+  // ----- Auto-refresh every 30 seconds -----
+  setInterval(() => {
+    fetchStations();
+  }, 30000);
+
+  // ----- Start animations -----
+  window.addEventListener('load', ()=>{ document.querySelectorAll('.fade-in').forEach(el=>el.style.animationPlayState='running'); });
+
+const reservationFormWrapper = document.getElementById('reservationFormWrapper');
+
+// Always start hidden
+if (reservationFormWrapper) {
+  reservationFormWrapper.style.display = 'none';
+}
+
+// Event delegation for ALL reservation buttons
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.makeReservationBtn');
+  if (!btn) return;
+
+  if (!activeStation) {
+    alert('No station selected.');
+    return;
+  }
+
+  // Block reservations if station is closed
+  if (activeStation.status === 'closed') {
+    alert('Reservations are not allowed for closed stations.');
+    return;
+  }
+
+  // Example: show station name inside the form
+  document.getElementById('rfStationName').textContent = activeStation;
+
+  stationDetails.style.display = 'none';
+  reservationFormWrapper.style.display = 'block';
+});
+
+
+document.addEventListener('click', (e)=>{
+  if(e.target.classList.contains('rf-close')){
+    stationDetails.style.display = 'block';
+    reservationFormWrapper.style.display = 'none';
+    closeModal.click();
+  }
+});
+
+document.getElementById('emergencyFinder').addEventListener('click', () => {
+  if (!navigator.geolocation) {
+    alert('Location access is required for emergency mode.');
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(async (pos) => {
+    const lat = pos.coords.latitude;
+    const lng = pos.coords.longitude;
+
+    try {
+      const res = await fetch(`/emergency-fuel?lat=${lat}&lng=${lng}`);
+      const list = await res.json();
+
+      stations = list.map(s => ({
+        id: s.id || 1,
+        name: s.name,
+        city: s.city,
+        rating: s.rating ,
+        status: s.status ,
+        image: s.image,
+        queue_level: s.queue_level,
+        wait_min: s.avg_wait_min,
+        wait_max: s.avg_wait_max
+      }));
+
+      renderStations(); // Reuse your existing renderer
+    } catch {
+      alert('Emergency lookup failed.');
+    }
+
+  }, () => {
+    alert('Location permission denied.');
+  });
+});
+
+// Explore more
+async function fetchOtherBusinesses() {
+  try {
+    const res = await fetch('/other-businesses'); // replace with API endpoint
+    const data = await res.json();
+
+    const container = document.getElementById('otherBusinesses');
+    container.innerHTML = '';
+
+    data.forEach((b, i) => {
+      const card = document.createElement('article');
+      card.className = 'card fade-in delay-2';
+      card.innerHTML = `
+        <div class="thumb">
+          <img src="${b.image || 'https://picsum.photos/400/300?random=' + (200+i)}" alt="${escapeHtml(b.name)}">
+        </div>
+        <h4>${escapeHtml(b.name)}</h4>
+        <div class="meta">
+          <span>${escapeHtml(b.city)}</span>
+          <span>⭐ ${Number(b.rating).toFixed(1)}</span>
+        </div>
+      `;
+      card.addEventListener('click', () => showBusinessModal(b));
+      container.appendChild(card);
+    });
+  } catch (err) {
+    console.error('Failed to load other businesses', err);
+  }
+}
+
+// Modal for other businesses (reusable from fuel stations modal)
+function showBusinessModal(business) {
+  stationDetails.innerHTML = `
+    <img src="${business.image || 'https://picsum.photos/400/300?random=50'}" alt="${escapeHtml(business.name)}">
+    <h4>${escapeHtml(business.name)}</h4>
+    <div class="meta">
+      <span>${escapeHtml(business.city)}</span>
+      <span>⭐ ${Number(business.rating).toFixed(1)}</span>
+    </div>
+    <p><strong>Category:</strong> ${business.category}</p>
+    <p><strong>Opening Hours:</strong> ${business.opening || 'N/A'}</p>
+    <div class="actions">
+      <button onclick="alert('Directions coming soon')">Get Directions</button>
+    </div>
+  `;
+  stationModal.style.display = 'flex';
+  stationModal.setAttribute('aria-hidden', 'false');
+}
+
+// Call fetch function on load
+fetchOtherBusinesses();
+
+// ----- Reservation Form Submission -----
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.makeReservationBtn');
+  if (!btn) return;
+
+  if (!activeStation) {
+    alert('No station selected.');
+    return;
+  }
+
+  // Show reservation form
+  stationDetails.style.display = 'none';
+  reservationFormWrapper.style.display = 'block';
+
+  // Pre-fill station name
+  document.getElementById('rfStationName').textContent = activeStation.name;
+
+  // Toggle fuel/service fields based on type
+  const reservationType = reservationFormWrapper.querySelector('select[name="reservationType"]');
+  const fuelFields = document.getElementById('fuelFields');
+  const serviceFields = document.getElementById('serviceFields');
+
+  const toggleFields = () => {
+    if (reservationType.value === 'fuel') {
+      fuelFields.style.display = 'block';
+      serviceFields.style.display = 'none';
+    } else {
+      fuelFields.style.display = 'none';
+      serviceFields.style.display = 'block';
+    }
+  };
+
+  reservationType.addEventListener('change', toggleFields);
+  toggleFields(); // initialize on open
+
+  // Submit handler
+  const submitBtn = reservationFormWrapper.querySelector('.rf-submit');
+  submitBtn.onclick = async () => {
+    // Query fields inside submit handler
+    const rfType = reservationFormWrapper.querySelector('select[name="reservationType"]');
+    const rfFuelType = reservationFormWrapper.querySelector('select[name="fuelType"]');
+    const rfLitres = reservationFormWrapper.querySelector('select[name="litres"]');
+    const rfFuelTime = reservationFormWrapper.querySelector('input[name="fuelTime"]');
+    const rfServiceName = reservationFormWrapper.querySelector('input[name="serviceName"]');
+    const rfServiceTime = reservationFormWrapper.querySelector('input[name="serviceTime"]');
+
+    if (!rfType) return alert('Reservation type selector not found.');
+
+    const reservationData = { business_id: activeStation.id, type: rfType.value };
+
+    if (rfType.value === 'fuel') {
+      if (!rfFuelType || !rfLitres || !rfFuelTime) return alert('Fuel fields missing.');
+      if (!rfFuelType.value || !rfLitres.value || !rfFuelTime.value) return alert('Please fill all fuel fields.');
+      reservationData.fuel_type = rfFuelType.value;
+      reservationData.fuel_amount = rfLitres.value;
+      reservationData.fuel_time = rfFuelTime.value;
+    } else if (rfType.value === 'other') {
+      if (!rfServiceName || !rfServiceTime) return alert('Service fields missing.');
+      if (!rfServiceName.value || !rfServiceTime.value) return alert('Please fill all service fields.');
+      reservationData.service_name = rfServiceName.value;
+      reservationData.service_time = rfServiceTime.value;
+    } else {
+      return alert('Invalid reservation type.');
+    }
+
+    console.log('Submitting reservation:', reservationData);
+
+    try {
+      const res = await fetch('/reservations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(reservationData),
+        credentials: 'same-origin'
+      });
+
+      const result = await res.json();
+
+      if (res.ok) {
+        alert('Reservation successful!');
+        reservationFormWrapper.style.display = 'none';
+        stationDetails.style.display = 'block';
+      } else {
+        alert('Reservation failed: ' + (result.error || 'Unknown error'));
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Reservation request failed.');
+    }
+  };
+});
+
+
+
+// Close form
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('rf-close')) {
+    reservationFormWrapper.style.display = 'none';
+    stationDetails.style.display = 'block';
+  }
+});
+
+
+
+// ===================== BOTTOM NAV (Reservations Page) ===================== //
+
+  const reservationsSection = document.getElementById("reservations-section");
+  const reservationList = document.getElementById("reservationList");
+  const addReservationBtn = document.getElementById("addReservationBtn");
+
+ function showReservations() {
+  // Hide home content
+  document.querySelector('.hero').style.display = 'none';
+  document.querySelector('.topbar').style.display = 'none';
+  document.querySelector('.content').style.display = 'none';
+  document.querySelector('.explore-more').style.display = 'none';
+
+  // Remove active state from Home tab
+  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+
+  // Show reservations page
+  document.getElementById('reservations-section').classList.remove('hidden');
+
+  // Highlight Reservations tab
+  const navItems = document.querySelectorAll('.nav-item div');
+  navItems.forEach(n => {
+    if (n.textContent.trim().toLowerCase() === 'reservations') {
+        n.parentElement.classList.add('active');
+    }
+  });
+}
+
+  // Return to home when clicking Home
+  document.querySelectorAll(".nav-item")[0].addEventListener("click", () => {
+    reservationsSection.classList.add("hidden");
+    document.querySelector(".active").classList.remove('active');
+    document.querySelectorAll(".nav-item")[0].classList.add('active');
+    document.querySelector(".content").style.display = "block";
+    document.querySelector('.topbar').style.display = 'flex';
+    document.querySelector(".hero").style.display = "flex";
+  });
+
+  // Create a new reservation (placeholder)
+  addReservationBtn.addEventListener("click", () => {
+    const id = Date.now();
+    const item = document.createElement("div");
+    item.className = "reservation-card";
+    item.innerHTML = `
+      <h4>Reservation #${id}</h4>
+      <p>Status: Confirmed</p>
+      <button class="cancel-res">Cancel</button>
+    `;
+    reservationList.appendChild(item);
+  });
+
+  // Cancel reservation
+  document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("cancel-res")) {
+      e.target.parentElement.remove();
+    }
+  });
+
+</script>
+</body>
+</html>

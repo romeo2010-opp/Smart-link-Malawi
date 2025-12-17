@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sign Up — SmartLink Malawi</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+:root {
+  --bg: #0a0a0a;
+  --accent: #00c853;
+  --muted: rgba(255, 255, 255, 0.6);
+  --input-bg: rgba(25, 25, 25, 0.9);
+  --input-border: rgba(255, 255, 255, 0.1);
+  --shadow: rgba(0, 0, 0, 0.7);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #0a0a0a, #111);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Push container from top instead of centering */
+  padding-top: 60px;       /* Add space from top */
+  min-height: 100vh;
+  color: #fff;
+}
+
+
+.auth-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 36px 28px;
+  background: rgba(15, 15, 15, 0.95);
+  border-radius: 24px;
+  box-shadow: 0 12px 40px var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+ 
+}
+
+.auth-container h2 {
+  margin: 0 0 10px 0;
+  font-size: 26px;
+  font-weight: 700;
+  text-align: center;
+  color: #fff;
+}
+
+.auth-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.auth-group label {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.auth-group input {
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.25s, background 0.25s;
+}
+
+.auth-group input::placeholder {
+  color: var(--muted);
+}
+
+.auth-group input:focus {
+  border-color: var(--accent);
+  background: rgba(25, 25, 25, 1);
+}
+
+.auth-submit {
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  background: linear-gradient(180deg, #00c853, #009e40);
+  color: #000;
+  transition: opacity 0.25s ease, transform 0.2s ease;
+}
+
+.auth-submit:hover {
+  opacity: 0.95;
+  transform: translateY(-2px);
+}
+
+.auth-footer {
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 12px;
+}
+
+.auth-footer a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.auth-footer a:hover {
+  text-decoration: underline;
+}
+
+@keyframes fadeIn {
+  0% {opacity: 0; transform: translateY(20px);}
+  100% {opacity: 1; transform: translateY(0);}
+}
+
+/* Responsive */
+@media screen and (max-width: 420px) {
+  .auth-container {
+    padding: 28px 20px;
+  }
+  .auth-container h2 {
+    font-size: 22px;
+  }
+  .auth-submit {
+    font-size: 15px;
+  }
+}
+
+</style>
+</head>
+<body>
+  <div class="auth-container fade-in">
+    <h2>Create Account</h2>
+    <div class="auth-group">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" placeholder="John Doe">
+    </div>
+    <div class="auth-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="you@example.com">
+    </div>
+    <div class="auth-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="••••••••">
+    </div>
+    <button class="auth-submit" id="signupBtn" onclick="signup()">Sign Up</button>
+    <div class="auth-footer">Already have an account? <a href="login.html">Login</a></div>
+  </div>
+<script>
+async function signup() {
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value.trim();
+
+  if (!name || !email || !password) {
+    alert('Please fill in all fields.');
+    return;
+  }
+
+  try {
+    const res = await fetch('/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, password })
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      // Server returned an error
+      alert(data.error || 'Sign up failed.');
+      return;
+    }
+
+    // Successful signup
+    alert(data.message); // "Account created"
+    if (data.success) window.location.href = '/dashboard.html';
+
+  } catch (err) {
+    console.error('Signup error:', err);
+    alert('Network error. Try again.');
+  }
+}
+
+// Attach function to button
+document.getElementById('signupBtn').addEventListener('click', signup);
+</script>
+
+</body>
+</html>
